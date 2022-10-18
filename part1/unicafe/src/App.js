@@ -1,10 +1,60 @@
 import { useState } from 'react'
 
+const Button = (props) => {
+  return (
+    <button onClick={props.onClick}>{props.name}</button>      
+  )
+}
+
+const Statistic = (props) => {
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
+  )
+}
+
+function Statistics(props) {
+  let statistics;
+  let all = props.good + props.neutral + props.bad;
+  let avg = (props.good - props.bad) / all;
+  let pos = (props.good / all) * 100;
+  if (all > 0) {
+    statistics = (
+      <div className="results">
+        <table>
+          <tbody>
+            <Statistic text="good" value={props.good} />
+            <Statistic text="neutral" value={props.neutral} />
+            <Statistic text="bad" value={props.bad} />
+            <Statistic text="all" value={all} />
+            <Statistic text="average" value={avg} />
+            <Statistic text="positive" value={pos + " %"} />
+          </tbody>
+        </table>
+      </div>
+    );
+  } else {
+    statistics = (
+      <div className="results">
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+  return (
+    <div className="statistics">
+      <h1>statistics</h1>
+      {statistics}
+    </div>
+  )
+}
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [bad, setBad] = useState(0)
   const [neutral, setNeutral] = useState(0)
-  const [total, setTotal ] = useState(0)
+  const [total, setTotal] = useState(0)
 
   
   const setGoodValue = () => {    
@@ -33,22 +83,14 @@ const App = () => {
     setTotal(total + 1)
   }
 
-    
-
   return (
     <div>
       <h1>Give feedback</h1>
-      <button onClick={setGoodValue}>Good</button>      
-      <button onClick={setBadValue}>Bad</button>
-      <button onClick={setNeutralValue}>Neutral</button>     
-
-      <h2>Statistics</h2>
-      <p>Good {good}</p>
-      <p>Bad {bad}</p>
-      <p>Neutral {neutral}</p>
-      <p>Total {total}</p>
-      <button onClick={resetValues}>Reset</button>     
-
+      <Button onClick={setGoodValue} name="Good"/>
+      <Button onClick={setBadValue} name="Bad"/>
+      <Button onClick={setNeutralValue} name="Neutral"/>
+      <Statistics good={good} bad={bad} neutral={neutral} />
+      <Button onClick={resetValues} name="Reset"/>     
     </div>
   )
 }
