@@ -1,10 +1,15 @@
 import { useState } from 'react'
 
+const Button = (props) => {
+  return (
+    <button onClick={props.onclick}>{props.title}</button>
+  )
+}
 
 const App = () => {
   const [nums, setNums] = useState([]) 
 
-  const array1 = [0,2,4,6,8]
+  const array1 = [2,4,6,8]
   const array2 = [1,3,5,7,9]
   const mergedArray = [...array1, ...array2]
 
@@ -18,13 +23,18 @@ const App = () => {
   };
 
   return (
-    <div>
-      <button onClick={showArray}>Click</button>
+    <div className='container'>
+      <Button onclick={showArray} title="Click here!"/>
       <h1>Numbers!</h1>
-      <ul>{nums.map(num => <li>{num}</li>)}</ul>
+      { nums.length > 0
+      ?
+        <ul>{nums.map((num, i) => <li key={i}>{num}</li>)}</ul>
+      : 
+        <h1>Press click to make those integers floats!</h1>
+      }
     </div>
-
   )
 }
+
 
 export default App
