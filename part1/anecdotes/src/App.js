@@ -7,7 +7,7 @@ const Button = (props) => {
 }
 
 const App = () => {
-  const [nums, setNums] = useState([]) 
+  const [nums, setNums] = useState([])
 
   const array1 = [2,4,6,8]
   const array2 = [1,3,5,7,9]
@@ -17,10 +17,10 @@ const App = () => {
     const copy = []
     let random = Math.random()
     mergedArray.sort().forEach(num => copy.push(num * random))
-
     setNums(copy);
+  }
 
-  };
+  let total = nums.reduce((partialSum, a) => partialSum + a, 0)
 
   return (
     <div className='container'>
@@ -28,7 +28,11 @@ const App = () => {
       <h1>Numbers!</h1>
       { nums.length > 0
       ?
+      <div>
         <ul>{nums.map((num, i) => <li key={i}>{num}</li>)}</ul>
+        <h3>Total: {total}</h3>
+      </div>
+        
       : 
         <h1>Press click to make those integers floats!</h1>
       }
